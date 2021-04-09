@@ -17,16 +17,22 @@ class Employee_Sales_Plan_Controller extends Controller
      */
     public function index()
     {   
-        $plan = Employee_Sales_Plan::where('approved', 1)->latest()->first();
+        // $plan = Employee_Sales_Plan::where('approved', 1)->latest()->first();
+        $plan = Employee_Sales_Plan::latest()->first();
+
+        if(is_null($plan)){
+            return redirect()->back()->with('info', 'No employee sales plan available.');
+        }
 
         $approver = User::find($plan->approved_by_id);
         $role_of_approver = $approver->getRoleNames()[0];
 
         $to_be_approved = FALSE;
-        if(strcmp($role_of_approver, "manager") == 0) {
+        
+        if(strcmp($role_of_approver, "manager") == 0 || strcmp($role_of_approver, "ceo") == 0) {
             $to_be_approved = TRUE;
-        }
-
+        }    
+        
         $commissions = [];
         if(!is_null($plan)) {
             $commissions = Commission::where('employee_sales_plan_id', $plan->id)->get();

@@ -31,6 +31,9 @@ Route::middleware(['role:sales_person'])->group(function () {
 Route::middleware(['role:sales_manager'])->group(function () {
     Route::get('/add_sale', 'Sale_Controller@index');
     Route::post('/add_sale', 'Sale_Controller@store');
+
+    Route::get('/commission_amount', 'Commission_Plan_Controller@index');
+    Route::get('/commission_amount/{id}/{approve}', 'Employee_Sales_Plan_Controller@store');
 });
 
 

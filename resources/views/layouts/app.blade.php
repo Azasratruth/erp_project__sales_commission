@@ -80,11 +80,12 @@
                                     {{-- Sales Manager --}}
                                     @role('sales_manager')
                                         <a class="dropdown-item" href="{{ url('/add_sale') }}" >Add Sales</a>
+                                        <a class="dropdown-item" href="{{ url('/commission_amount') }}" >Commission Plan</a>
                                     @endrole
 
                                     {{-- Sales Person --}}
                                     @role('sales_person')
-                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                        {{-- <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a> --}}
                                     @endrole
 
                                     {{-- User --}}

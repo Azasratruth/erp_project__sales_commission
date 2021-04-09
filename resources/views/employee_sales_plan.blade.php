@@ -52,7 +52,11 @@
                         <br>
                         
                         <div class="mb-3">
+                            @if($plan->approved)
                             <p>Approved by {{$approver->name}} ({{$role_of_approver}}).</p>
+                            @else
+                            <p>Rejected by {{$approver->name}} ({{$role_of_approver}}).</p>
+                            @endif
                         </div>
                         <br>
 
