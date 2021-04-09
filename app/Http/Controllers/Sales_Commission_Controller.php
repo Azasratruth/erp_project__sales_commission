@@ -11,6 +11,7 @@ class Sales_Commission_Controller extends Controller
         // $users      =   User::doesntHave('roles')->get();
         // $roles      =   Role::pluck('name');
         
+        // $sales_comms = [];
         $sales_comms = [];
 
 

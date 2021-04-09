@@ -40,8 +40,10 @@ Route::middleware(['role:payables_manager'])->group(function () {
 
 
 Route::middleware(['role:manager'])->group(function () {
-    Route::get('/sales_commission', 'Sales_Commission_Controller@sales_commission_index');
-    Route::get('/sales_commission/{val}', 'Sales_Commission_Controller@sales_commission_store');
+    Route::get('/sales_commission', 'Commission_Controller@index');
+    Route::post('/sales_commission', 'Commission_Controller@store');
+    Route::get('/sales_commission/{id}', 'Commission_Controller@destroy');
+    Route::get('/sales_commission_approve/{id}', 'Commission_Controller@approve');
 });
 
 

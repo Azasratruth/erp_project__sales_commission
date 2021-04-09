@@ -14,7 +14,19 @@ class Employee_Sales_Plan_Controller extends Controller
      */
     public function index()
     {
-        //
+        // $users      =   User::doesntHave('roles')->get();
+        // $roles      =   Role::pluck('name');
+        
+        // $sales_comms = [];
+        $plans = Employee_Sales_Plan::where('', '')->get();
+
+
+        return view('sales_commission',[
+            'sales_comms'         => $sales_comms,
+            // 'users'         => $users,
+            // 'roles'         => $roles,
+        ]);
+ 
     }
 
     /**

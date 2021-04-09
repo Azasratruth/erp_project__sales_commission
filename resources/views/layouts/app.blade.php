@@ -69,7 +69,7 @@
 
                                     {{-- Manager --}}
                                     @role('manager')
-                                        <a class="dropdown-item" href="{{ url('/sales_commission') }}" >Sales Commissions</a>
+                                        <a class="dropdown-item" href="{{ url('/sales_commission') }}" >Sales Commissions Plans</a>
                                     @endrole
 
                                     {{-- Payables Manager --}}
