@@ -55,6 +55,39 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    
+                                    {{-- Admin --}}
+                                    @role('admin')
+                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                        <a class="dropdown-item" href="{{ url('/add_product') }}" >Add Product</a>
+                                    @endrole
+
+                                    {{-- CEO --}}
+                                    @role('ceo')
+                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                    @endrole
+
+                                    {{-- Manager --}}
+                                    @role('manager')
+                                        <a class="dropdown-item" href="{{ url('/sales_commission') }}" >Sales Commissions</a>
+                                    @endrole
+
+                                    {{-- Payables Manager --}}
+                                    @role('payables_manager')
+                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                    @endrole
+
+                                    {{-- Sales Manager --}}
+                                    @role('sales_manager')
+                                        <a class="dropdown-item" href="{{ url('/add_sale') }}" >Add Sales</a>
+                                    @endrole
+
+                                    {{-- Sales Person --}}
+                                    @role('sales_person')
+                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                    @endrole
+
+                                    {{-- User --}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -72,7 +105,9 @@
             </div>
         </nav>
 
+        {{-- Layout --}}
         <main class="py-4">
+            @include('layouts.flash_message')
             @yield('content')
         </main>
     </div>
