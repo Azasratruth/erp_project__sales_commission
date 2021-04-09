@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Commission;
+
 use App\Employee_Sales_Plan;
 use Illuminate\Http\Request;
 
@@ -13,20 +16,29 @@ class Employee_Sales_Plan_Controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        // $users      =   User::doesntHave('roles')->get();
-        // $roles      =   Role::pluck('name');
-        
-        // $sales_comms = [];
-        $plans = Employee_Sales_Plan::where('', '')->get();
+    {   
+        $plan = Employee_Sales_Plan::where('approved', 1)->latest()->first();
 
+        $approver = User::find($plan->approved_by_id);
+        $role_of_approver = $approver->getRoleNames()[0];
 
-        return view('sales_commission',[
-            'sales_comms'         => $sales_comms,
-            // 'users'         => $users,
-            // 'roles'         => $roles,
+        $to_be_approved = FALSE;
+        if(strcmp($role_of_approver, "manager") == 0) {
+            $to_be_approved = TRUE;
+        }
+
+        $commissions = [];
+        if(!is_null($plan)) {
+            $commissions = Commission::where('employee_sales_plan_id', $plan->id)->get();
+        }
+
+        return view('employee_sales_plan',[
+            'plan'                  =>  $plan,
+            'commissions'           =>  $commissions,
+            'to_be_approved'        =>  $to_be_approved,
+            'approver'              =>  $approver,
+            'role_of_approver'      =>  $role_of_approver,
         ]);
- 
     }
 
     /**
@@ -45,9 +57,21 @@ class Employee_Sales_Plan_Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id, $approval)
     {
-        //
+        $plan = Employee_Sales_Plan::find($id);
+        $plan->approved         = $approval;
+        $plan->approved_by_id   = request()->user()->id;
+        $plan->save();
+
+        if($approval){
+            // 1
+            return redirect()->back()->with('success', 'Plan approved.');
+        }
+        else{
+            // 0
+            return redirect()->back()->with('success', 'Plan rejected.');
+        }
     }
 
     /**

@@ -64,7 +64,7 @@
 
                                     {{-- CEO --}}
                                     @role('ceo')
-                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                        <a class="dropdown-item" href="{{ url('/employee_sales_plan') }}" >Employee Sales Plan</a>
                                     @endrole
 
                                     {{-- Manager --}}

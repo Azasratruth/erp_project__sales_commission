@@ -48,7 +48,8 @@ Route::middleware(['role:manager'])->group(function () {
 
 
 Route::middleware(['role:ceo'])->group(function () {
-    // Route::get('/ambassador_home', 'Brand_Ambassador_Controller@index');
+    Route::get('/employee_sales_plan', 'Employee_Sales_Plan_Controller@index');
+    Route::get('/employee_sales_plan/{id}/{approve}', 'Employee_Sales_Plan_Controller@store');
 });
 
 Route::middleware(['role:admin'])->group(function () {
