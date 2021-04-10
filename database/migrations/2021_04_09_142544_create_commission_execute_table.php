@@ -17,6 +17,10 @@ class CreateCommissionExecuteTable extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->unsignedBigInteger('seller_id')->nullable();
+            $table->foreign('seller_id')->references('id')->on('users')
+            ->onUpdate('cascade')->onDelete('cascade');
+
             $table->unsignedBigInteger('commission_id')->nullable();
             $table->foreign('commission_id')->references('id')->on('commission')
             ->onUpdate('cascade')->onDelete('cascade');

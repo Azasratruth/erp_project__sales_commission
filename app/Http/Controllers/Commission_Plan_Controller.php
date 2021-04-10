@@ -13,7 +13,6 @@ class Commission_Plan_Controller extends Controller
 {
     public function index()
     {   
-        // $plan = Employee_Sales_Plan::where('approved', 1)->latest()->first();
         $plan = Employee_Sales_Plan::latest()->first();
 
         if(is_null($plan)){

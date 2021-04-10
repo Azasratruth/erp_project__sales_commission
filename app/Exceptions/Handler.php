@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Auth;
+
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -50,6 +52,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            if(Auth::check()){
+                return redirect()->route('home');
+            }
+        }
         return parent::render($request, $exception);
     }
 }

@@ -74,7 +74,7 @@
 
                                     {{-- Payables Manager --}}
                                     @role('payables_manager')
-                                        <a class="dropdown-item" href="{{ url('/assign_roles') }}" >Assign Roles</a>
+                                        <a class="dropdown-item" href="{{ url('/sales_commissions_execute') }}" >Pay Sales Commissions</a>
                                     @endrole
 
                                     {{-- Sales Manager --}}

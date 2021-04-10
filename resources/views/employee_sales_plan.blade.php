@@ -60,7 +60,17 @@
                         </div>
                         <br>
 
-                        @if($to_be_approved)
+                        @if($plan->approved_by_id == request()->user()->id)
+                        <div class="mb-3 btn-grouped">
+                            <div class="inner-group">
+                                <button type="button" class="form-control btn btn-outline-success" onclick="location.href = '/employee_sales_plan/{{$plan->id}}/1';">Approve Plan</button>
+                            </div>
+                            
+                            <div class="inner-group">
+                                <button type="button" class="form-control btn btn-outline-danger" onclick="location.href = '/employee_sales_plan/{{$plan->id}}/0';">Reject Plan</button>
+                            </div>
+                        </div>                        
+                        @else
                         <div class="mb-3 btn-grouped">
                             <div class="inner-group">
                                 <button type="button" class="form-control btn btn-success" onclick="location.href = '/employee_sales_plan/{{$plan->id}}/1';">Approve Plan</button>
