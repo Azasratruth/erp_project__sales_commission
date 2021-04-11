@@ -21,7 +21,7 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
           coverage: none
       - name: Install Composer dependencies
-        run: composer install -q --prefer-dist --no-interaction --no-suggest
+        run: composer update --prefer-dist --no-interaction --no-suggest
       - name: Install NPM dependencies
         run: npm install
       - name: Compile assets
