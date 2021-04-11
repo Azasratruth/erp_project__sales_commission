@@ -29,6 +29,10 @@ class Commission_Execute_Controller extends Controller
             return redirect()->back()->with('info', 'No employee sales plan available.');
         }
 
+        if(is_null($plan->approved)){
+            return redirect()->back()->with('info', 'New Employee Plan is being drafted.');
+        }
+
         $approver = User::find($plan->approved_by_id);
         $role_of_approver = $approver->getRoleNames()[0];
 
@@ -84,13 +88,21 @@ class Commission_Execute_Controller extends Controller
                     }
 
                     if($commission_id != -1){
-                        array_push($users_commissions, [
-                            'user_id'           =>  $value->user_id,
-                            'user_name'         =>  $value->user_name,
-                            'total_sales'       =>  $total_sales[$i],
-                            'commission_id'     =>  $commission_id,
-                            'commission'        =>  $user_commission,
-                        ]);
+                        
+                        $user_executed_check    =   DB::table('commission_execute')
+                        ->join('commission', 'commission.id', 'commission_id')
+                        ->where('commission.employee_sales_plan_id', $plan->id)
+                        ->exists('commission_execute.seller_id', $value->user_id);
+
+                        if(!$user_executed_check){
+                            array_push($users_commissions, [
+                                'user_id'           =>  $value->user_id,
+                                'user_name'         =>  $value->user_name,
+                                'total_sales'       =>  $total_sales[$i],
+                                'commission_id'     =>  $commission_id,
+                                'commission'        =>  $user_commission,
+                            ]);
+                        }
                     }
                     
                     break;
@@ -100,7 +112,6 @@ class Commission_Execute_Controller extends Controller
 
         }
 
-        // dd($users_commissions);
         return view('commission_execute',[
             'plan'                  =>  $plan,
             'users_commissions'     =>  $users_commissions,
@@ -129,8 +140,6 @@ class Commission_Execute_Controller extends Controller
      */
     public function store($plan_id, $plan_executed, $user_id, $commission_id, $commission_amount, $approved)
     {
-        // var_dump($plan_executed);return;
-
         Commission_Execute::create([
             'seller_id'         =>  $user_id,
             'commission_id'     =>  $commission_id,
@@ -156,22 +165,9 @@ class Commission_Execute_Controller extends Controller
             $to_name = User::find($user_id)->name;
             $to_email = trim(User::find($user_id)->email);
             $data = array('name'=> User::find($user_id)->name, 'body' => "Sales Commission Rs. {$commission_amount} added to account.");
-            // dd(trim($to_email));
             
-            // Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
-            // Mail::send('emails.mail', $data, function($message) use ($to_name, $to_email) {
-            
-            // $template = new SalesCommissionConfirmation(request()->user()->name, request()->user()->email, $to_name, $to_email);
             $template = new SalesCommissionConfirmation(request()->user()->name, request()->user()->email, User::find($user_id), $commission_amount);
             Mail::to($to_email)->send($template);
-
-            // dd($to_email);
-                // Mail::send('vendor.mail.text.message', $data, function($message) use ($to_name, $to_email) {
-            //     $message->from(request()->user()->email, request()->user()->name);
-
-            //     $message->to($to_email, $to_name)
-            //     ->subject('Sales Commission Confiramation');
-            // });
 
             return redirect()->back()->with('success', "Commission Approved. Email Sent.");
         }

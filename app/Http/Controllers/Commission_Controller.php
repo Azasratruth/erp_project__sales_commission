@@ -23,8 +23,6 @@ class Commission_Controller extends Controller
             $commissions = Commission::where('employee_sales_plan_id', $plan->id)->get();
         }
 
-        // var_dump($plans);return;
-
         return view('commission',[
             'commissions'       => $commissions,
             'plan'              => $plan,

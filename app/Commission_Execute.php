@@ -45,7 +45,7 @@ class Commission_Execute extends Model
     /**
      * @var array
      */
-    protected $fillable = ['commission_id', 'added_by_id', 'approved_by_id', 'executed_by_id', 'created_at', 'updated_at', 'commission_amount', 'approved', 'executed', 'deleted_at'];
+    protected $fillable = ['commission_id', 'seller_id', 'added_by_id', 'approved_by_id', 'executed_by_id', 'created_at', 'updated_at', 'commission_amount', 'approved', 'executed', 'deleted_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -17,8 +17,13 @@
                         </div>
                         @endif
 
+                        {{-- @if(empty($commissions)) --}}
+                        @if(!is_null($plan) && $plan->approved && $plan->executed)
+                        <p>Plan executed.</p>
+                        <br>
+                        @endif
                         @if(empty($commissions))
-                        <p>No Draft of Commission Plan found For this Quarter.</p>
+                        <p>No Draft Of New Commission Plan Found.</p>
                         <br>
                         @endif
 
@@ -28,7 +33,7 @@
                             <thead class="thead-dark">
                                 <th scope="col">Sales Quota</th>
                                 <th scope="col">Percentage</th>
-                                @if(!is_null($plan) && !$plan->approved)
+                                @if((!is_null($plan) && !$plan->approved) || ($plan->approved && $plan->executed))
                                 <th scope="col">Add / Remove</th>
                                 @endif
                             </thead>
@@ -49,7 +54,7 @@
                                 </tr>
                                 @endforeach
 
-                                @if(!is_null($plan) && !$plan->approved)
+                                @if((!is_null($plan) && !$plan->approved) || ($plan->approved && $plan->executed))
                                 {{-- Insert --}}
                                 <tr scope="row">
                                     <td>

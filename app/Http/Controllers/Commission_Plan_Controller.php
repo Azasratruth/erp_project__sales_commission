@@ -19,6 +19,10 @@ class Commission_Plan_Controller extends Controller
             return redirect()->back()->with('info', 'No employee sales plan available.');
         }
 
+        if(is_null($plan->approved)){
+            return redirect()->back()->with('info', 'New Employee Plan is being drafted.');
+        }
+
         $approver = User::find($plan->approved_by_id);
         $role_of_approver = $approver->getRoleNames()[0];
 
