@@ -33,7 +33,7 @@
                             <thead class="thead-dark">
                                 <th scope="col">Sales Quota</th>
                                 <th scope="col">Percentage</th>
-                                @if((!is_null($plan) && !$plan->approved) || ($plan->approved && $plan->executed))
+                                @if(is_null($plan) || (!is_null($plan) && !$plan->approved) || (!is_null($plan) && $plan->approved && $plan->executed))
                                 <th scope="col">Add / Remove</th>
                                 @endif
                             </thead>
@@ -54,7 +54,7 @@
                                 </tr>
                                 @endforeach
 
-                                @if((!is_null($plan) && !$plan->approved) || ($plan->approved && $plan->executed))
+                                @if(is_null($plan) || (!is_null($plan) && !$plan->approved) || (!is_null($plan) && $plan->approved && $plan->executed))
                                 {{-- Insert --}}
                                 <tr scope="row">
                                     <td>

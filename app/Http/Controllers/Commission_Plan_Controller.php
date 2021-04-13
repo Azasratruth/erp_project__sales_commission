@@ -41,12 +41,22 @@ class Commission_Plan_Controller extends Controller
             ->orderBy('sales_quota', 'desc')
             ->get();
 
+            if(Employee_Sales_Plan::all()->count() > 1){
+                $filter_sales = Employee_Sales_Plan::latest()->skip(1)->first();
+
+                if(!is_null($filter_sales)){
+                    $filter_sales = $filter_sales->updated_at;
+                }
+            }
+
             // User Data
             $users = DB::table('users')
+            ->where('sale.created_at', '>', $filter_sales)
             ->join('sale', 'sale.seller_id', '=', 'users.id')
             ->join('product', 'product.id', '=', 'sale.product_id')
             ->select('*', 'users.name as user_name', 'users.id as user_id')
             ->get();
+
 
             $users = $users->groupby('seller_id');
 
